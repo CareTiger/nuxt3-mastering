@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="">
         <p class="mt-0 uppercase font-bold text-slate-400 mb-1">
             Lesson {{ chapter.number }} - {{ lesson.number }}
         </p>
@@ -20,7 +20,11 @@
                 Download Video
             </NuxtLink>
         </div>
-        <VideoPlayer v-if="lesson.videoId" :videoId="lesson.videoId" />
+        <VideoPlayer
+            class="w-full"
+            v-if="lesson.videoId"
+            :videoId="lesson.videoId"
+        />
         <p>{{ lesson.text }}</p>
         <LessonCompleteButton
             :model-value="isLessonComplete"
@@ -42,5 +46,21 @@ const lesson = computed(() => {
     return chapter.value.lessons.find(
         (lesson) => lesson.slug === route.params.lessonSlug
     );
+});
+
+const title = computed(() => {
+    return `${lesson.value.title} - ${course.title}`;
+});
+
+useHead({
+    title,
+});
+
+const progress = useState("progress", () => {
+    return [];
+});
+
+const isLessonComplete = computed(() => {
+    return progress.value.includes(lesson.value.id);
 });
 </script>

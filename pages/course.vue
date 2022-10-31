@@ -23,10 +23,14 @@
                 >
                     <h4>{{ chapter.title }}</h4>
                     <NuxtLink
-                        :to="`/course/chapter/${chapter.slug}/lesson/${lesson.slug}`"
+                        :to="lesson.path"
                         v-for="(lesson, index) in chapter.lessons"
                         :key="lesson.slug"
                         class="flex flex-row space-x-1 no-underline text-gray-600 prose-sm hover:text-gray-900"
+                        :class="{
+                            'text-blue-500': lesson.path === $route.fullPath,
+                            'text-gray-600': lesson.path !== $route.fullPath,
+                        }"
                     >
                         <span class="text-gray-500">{{ index + 1 }}.</span>
                         <span>{{ lesson.title }}</span>
